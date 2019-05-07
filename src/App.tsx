@@ -150,6 +150,7 @@ class App extends React.Component<AppProps, AppState> {
 
   componentDidMount() {
     this._canvasCtx = (this._canvasRef.current as HTMLCanvasElement).getContext('2d') as CanvasRenderingContext2D;
+    this.setState({ isRunning: true });
     this.init();
     this.animate();
   }
@@ -164,7 +165,8 @@ class App extends React.Component<AppProps, AppState> {
     this.setState(prev => (
       {
         currentAlgorithmIndex: (prev.currentAlgorithmIndex - 1 + Object.keys(this.algorithmMap).length) % Object.keys(this.algorithmMap).length,
-        count: 0
+        count: 0,
+        isRunning: true
       }
     ), this.sortChangedCallback);
   };
@@ -173,7 +175,8 @@ class App extends React.Component<AppProps, AppState> {
     this.setState(prev => (
       {
         currentAlgorithmIndex: (prev.currentAlgorithmIndex + 1) % Object.keys(this.algorithmMap).length,
-        count: 0
+        count: 0,
+        isRunning: true
       }
     ), this.sortChangedCallback);
   };
@@ -183,7 +186,6 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   animate = () => {
-    this.setState({ isRunning: true });
     const { currentAlgorithmIndex } = this.state;
     const raf = window.requestAnimationFrame(this.animate);
     if (this._frame <= 0) {
